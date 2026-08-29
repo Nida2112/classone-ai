@@ -45,3 +45,34 @@ export interface LearningProgress {
   incorrectAnswers: number;
   lastStudied?: string;
 }
+export type QuestionType = "MCQ" | "TRUE_FALSE";
+
+export interface AssessmentQuestion {
+  id: string;
+  topicId: string;
+  question: string;
+  type: QuestionType;
+  options?: string[];
+  correctAnswer: string;
+}
+
+export interface Assessment {
+  id: string;
+  title: string;
+  topicId: string;
+  questionIds: string[];
+}
+
+export interface AssessmentAnswer {
+  questionId: string;
+  answer: string;
+}
+
+export interface AssessmentResult {
+  assessmentId: string;
+  score: number;
+  totalQuestions: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  incorrectQuestionIds: string[];
+}

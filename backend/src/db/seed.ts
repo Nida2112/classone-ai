@@ -4,6 +4,8 @@ import {
   Chapter,
   Topic,
   LearningProgress,
+  Assessment,
+  AssessmentQuestion,
 } from "../types";
 
 export const students: Student[] = [
@@ -158,5 +160,83 @@ export const learningProgress: LearningProgress[] = [
     correctAnswers: 6,
     incorrectAnswers: 4,
     lastStudied: "2026-08-25",
+  },
+];
+export const assessmentQuestions: AssessmentQuestion[] = [
+  {
+    id: "q-phy-motion-1",
+    topicId: "topic-phy-motion-basics",
+    question: "Which quantity describes how fast an object changes its position?",
+    type: "MCQ",
+    options: ["Speed", "Mass", "Density", "Temperature"],
+    correctAnswer: "Speed",
+  },
+  {
+    id: "q-phy-motion-2",
+    topicId: "topic-phy-motion-basics",
+    question: "Velocity has both magnitude and direction.",
+    type: "TRUE_FALSE",
+    options: ["True", "False"],
+    correctAnswer: "True",
+  },
+  {
+    id: "q-phy-measurement-1",
+    topicId: "topic-phy-measurement",
+    question: "What is the SI unit of length?",
+    type: "MCQ",
+    options: ["Metre", "Kilogram", "Second", "Newton"],
+    correctAnswer: "Metre",
+  },
+  {
+    id: "q-math-number-1",
+    topicId: "topic-math-number-systems",
+    question: "Which of the following is an irrational number?",
+    type: "MCQ",
+    options: ["2", "0.5", "√2", "4"],
+    correctAnswer: "√2",
+  },
+  {
+    id: "q-math-algebra-1",
+    topicId: "topic-math-algebra-basics",
+    question: "Is 3x + 2 an algebraic expression?",
+    type: "TRUE_FALSE",
+    options: ["True", "False"],
+    correctAnswer: "True",
+  },
+];
+
+export const assessments: Assessment[] = [
+  {
+    id: "assessment-phy-motion",
+    title: "Physics — Motion Quiz",
+    topicId: "topic-phy-motion-basics",
+    questionIds: [
+      "q-phy-motion-1",
+      "q-phy-motion-2",
+    ],
+  },
+  {
+    id: "assessment-phy-measurement",
+    title: "Physics — Measurement Quiz",
+    topicId: "topic-phy-measurement",
+    questionIds: [
+      "q-phy-measurement-1",
+    ],
+  },
+  {
+    id: "assessment-math-number",
+    title: "Mathematics — Number Systems Quiz",
+    topicId: "topic-math-number-systems",
+    questionIds: [
+      "q-math-number-1",
+    ],
+  },
+  {
+    id: "assessment-math-algebra",
+    title: "Mathematics — Algebra Quiz",
+    topicId: "topic-math-algebra-basics",
+    questionIds: [
+      "q-math-algebra-1",
+    ],
   },
 ];
