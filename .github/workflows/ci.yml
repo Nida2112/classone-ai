@@ -50,6 +50,12 @@ jobs:
 
       - name: Install AI Service dependencies
         run: npm --prefix services/ai-service ci
+      
+      - name: Install frontend dependencies
+        run: npm --prefix frontend ci
+
+      - name: Build frontend
+        run: npm --prefix frontend run build
 
       - name: Build all services
         run: npm run build
