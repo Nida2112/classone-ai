@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - phase-10-ci-cd
   pull_request:
 
 jobs:
