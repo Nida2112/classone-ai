@@ -68,3 +68,6 @@ jobs:
 
       - name: Backend health check
         run: curl --fail http://localhost:4000/api/health
+        
+      - name: Build Docker images
+        run: docker compose build
