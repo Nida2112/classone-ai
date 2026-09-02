@@ -4,7 +4,7 @@ import { StudentService } from "../services/StudentService";
 
 const studentService = new StudentService();
 
-export const getStudent = (
+export const getStudent = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -18,7 +18,7 @@ export const getStudent = (
       });
     }
 
-    const student = studentService.getStudent(studentId);
+    const student = await studentService.getStudent(studentId);
 
     if (!student) {
       return res.status(404).json({

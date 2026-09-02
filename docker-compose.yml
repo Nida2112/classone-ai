@@ -1,0 +1,51 @@
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      STUDENT_SERVICE_URL: http://student-service:4001
+      LEARNING_SERVICE_URL: http://learning-service:4002
+      ASSESSMENT_SERVICE_URL: http://assessment-service:4003
+      CURRICULUM_SERVICE_URL: http://curriculum-service:4004
+      AI_SERVICE_URL: http://ai-service:4005
+    depends_on:
+      - student-service
+      - learning-service
+      - assessment-service
+      - curriculum-service
+      - ai-service
+
+  student-service:
+    build:
+      context: services/student-service
+    ports:
+      - "4001:4001"
+
+  learning-service:
+    build:
+      context: services/learning-service
+    ports:
+      - "4002:4002"
+
+  assessment-service:
+    build:
+      context: services/assessment-service
+    ports:
+      - "4003:4003"
+
+  curriculum-service:
+    build:
+      context: services/curriculum-service
+    ports:
+      - "4004:4004"
+
+  ai-service:
+    build:
+      context: .
+      dockerfile: services/ai-service/Dockerfile
+    ports:
+      - "4005:4005"

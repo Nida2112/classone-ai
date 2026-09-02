@@ -1,0 +1,23 @@
+{
+  "name": "classone-ai",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n BACKEND,STUDENT,LEARNING,ASSESSMENT,CURRICULUM,AI -c blue,green,yellow,magenta,cyan,red \"npm run dev:backend\" \"npm run dev:student\" \"npm run dev:learning\" \"npm run dev:assessment\" \"npm run dev:curriculum\" \"npm run dev:ai\"",
+    "build": "npm run build:backend && npm run build:student && npm run build:learning && npm run build:assessment && npm run build:curriculum && npm run build:ai",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:student": "npm --prefix services/student-service run dev",
+    "dev:learning": "npm --prefix services/learning-service run dev",
+    "dev:assessment": "npm --prefix services/assessment-service run dev",
+    "dev:curriculum": "npm --prefix services/curriculum-service run dev",
+    "dev:ai": "npm --prefix services/ai-service run dev",
+    "build:backend": "npm --prefix backend run build",
+    "build:student": "npm --prefix services/student-service run build",
+    "build:learning": "npm --prefix services/learning-service run build",
+    "build:assessment": "npm --prefix services/assessment-service run build",
+    "build:curriculum": "npm --prefix services/curriculum-service run build",
+    "build:ai": "npm --prefix services/ai-service run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

@@ -1,15 +1,26 @@
-import { StudentRepository } from "../repositories/StudentRepository";
+import { getJson } from "../clients/httpClient";
 
 export class StudentService {
-  constructor(
-    private readonly studentRepository = new StudentRepository()
-  ) {}
+  private readonly studentServiceUrl =
+    process.env.STUDENT_SERVICE_URL || "http://localhost:4001";
 
-  getStudent(id: string) {
-    return this.studentRepository.findById(id);
+  async getStudent(id: string) {
+    try {
+      return await getJson(
+        `${this.studentServiceUrl}/students/${encodeURIComponent(id)}`
+      );
+    } catch (error: any) {
+      if (error?.message?.includes("status 404")) {
+        return undefined;
+      }
+
+      throw error;
+    }
   }
 
-  getStudents() {
-    return this.studentRepository.findAll();
+  async getStudents() {
+    return getJson(
+      `${this.studentServiceUrl}/students`
+    );
   }
 }

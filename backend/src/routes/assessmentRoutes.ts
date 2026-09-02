@@ -14,7 +14,7 @@ router.get(
 );
 
 router.post(
-  "/question/:questionId/answer",
+  "/student/:studentId/question/:questionId/answer",
   submitAnswer
 );
 

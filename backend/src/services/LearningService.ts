@@ -1,32 +1,39 @@
-import { LearningRepository } from "../repositories/LearningRepository";
-import { StudentRepository } from "../repositories/StudentRepository";
+import {
+  LearningServiceClient,
+  LearningProgressUpdate,
+} from "../clients/LearningServiceClient";
 
 export class LearningService {
   constructor(
-    private readonly learningRepository = new LearningRepository(),
-    private readonly studentRepository = new StudentRepository()
+    private readonly learningServiceClient =
+      new LearningServiceClient()
   ) {}
 
   getStudentProgress(studentId: string) {
-    const student = this.studentRepository.findById(studentId);
-
-    if (!student) {
-      return null;
-    }
-
-    return this.learningRepository.findByStudentId(studentId);
+    return this.learningServiceClient.getStudentProgress(
+      studentId
+    );
   }
 
-  getTopicProgress(studentId: string, topicId: string) {
-    const student = this.studentRepository.findById(studentId);
-
-    if (!student) {
-      return null;
-    }
-
-    return this.learningRepository.findByStudentAndTopic(
+  getTopicProgress(
+    studentId: string,
+    topicId: string
+  ) {
+    return this.learningServiceClient.getTopicProgress(
       studentId,
       topicId
+    );
+  }
+
+  updateTopicProgress(
+    studentId: string,
+    topicId: string,
+    updates: LearningProgressUpdate
+  ) {
+    return this.learningServiceClient.updateTopicProgress(
+      studentId,
+      topicId,
+      updates
     );
   }
 }

@@ -1,56 +1,102 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 import { AssessmentService } from "../services/AssessmentService";
 
 const assessmentService = new AssessmentService();
 
-export const getQuestions = (
+export const getQuestions = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
-  const questions =
-    assessmentService.getQuestions(
-      String(req.params.topicId)
-    );
+  try {
+    const topicId = String(
+      req.params.topicId || ""
+    ).trim();
 
-  return res.json(questions);
+    if (!topicId) {
+      return res.status(400).json({
+        error: "Topic ID is required"
+      });
+    }
+
+    return res.json(
+      await assessmentService.getQuestions(topicId)
+    );
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const submitAnswer = (
+export const submitAnswer = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
-  const { studentId, answer } = req.body;
+  try {
+    const studentId = String(
+      req.params.studentId || ""
+    ).trim();
 
-  if (!studentId || !answer) {
-    return res.status(400).json({
-      error: "studentId and answer are required",
-    });
+    const questionId = String(
+      req.params.questionId || ""
+    ).trim();
+
+    const { answer } = req.body;
+
+    if (!studentId || !questionId) {
+      return res.status(400).json({
+        error: "Student ID and question ID are required"
+      });
+    }
+
+    if (typeof answer !== "string") {
+      return res.status(400).json({
+        error: "Answer is required"
+      });
+    }
+
+    const result =
+      await assessmentService.submitAnswer(
+        studentId,
+        questionId,
+        answer
+      );
+
+    if (!result) {
+      return res.status(404).json({
+        error: "Question not found"
+      });
+    }
+
+    return res.json(result);
+  } catch (error) {
+    next(error);
   }
-
-  const attempt =
-    assessmentService.submitAnswer(
-      String(studentId),
-      String(req.params.questionId),
-      String(answer)
-    );
-
-  if (!attempt) {
-    return res.status(404).json({
-      error: "Question not found",
-    });
-  }
-
-  return res.json(attempt);
 };
 
-export const getStudentAttempts = (
+export const getStudentAttempts = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
-  return res.json(
-    assessmentService.getStudentAttempts(
-      String(req.params.id)
-    )
-  );
+  try {
+    const studentId = String(
+      req.params.id || ""
+    ).trim();
+
+    if (!studentId) {
+      return res.status(400).json({
+        error: "Student ID is required"
+      });
+    }
+
+    return res.json(
+      await assessmentService.getStudentAttempts(
+        studentId
+      )
+    );
+  } catch (error) {
+    next(error);
+  }
 };

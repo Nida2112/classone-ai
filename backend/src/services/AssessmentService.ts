@@ -1,16 +1,16 @@
 import {
-  AssessmentRepository,
-  AssessmentAttempt,
-} from "../repositories/AssessmentRepository";
+  AssessmentServiceClient,
+} from "../clients/AssessmentServiceClient";
 
 export class AssessmentService {
   constructor(
-    private readonly assessmentRepository =
-      new AssessmentRepository()
+    private readonly assessmentServiceClient =
+      new AssessmentServiceClient()
   ) {}
 
   getQuestions(topicId: string) {
-    return this.assessmentRepository.getQuestionsByTopic(topicId);
+    return this.assessmentServiceClient
+      .getQuestions(topicId);
   }
 
   submitAnswer(
@@ -18,30 +18,18 @@ export class AssessmentService {
     questionId: string,
     answer: string
   ) {
-    const question =
-      this.assessmentRepository.getQuestion(questionId);
-
-    if (!question) {
-      return null;
-    }
-
-    const correct =
-      question.correctAnswer === answer;
-
-    const attempt: AssessmentAttempt = {
-      id: `attempt-${Date.now()}`,
-      studentId,
-      questionId,
-      answer,
-      correct,
-    };
-
-    return this.assessmentRepository.saveAttempt(attempt);
+    return this.assessmentServiceClient
+      .submitAnswer(
+        studentId,
+        questionId,
+        answer
+      );
   }
 
-  getStudentAttempts(studentId: string) {
-    return this.assessmentRepository.getAttemptsByStudent(
-      studentId
-    );
+  getStudentAttempts(
+    studentId: string
+  ) {
+    return this.assessmentServiceClient
+      .getStudentAttempts(studentId);
   }
 }

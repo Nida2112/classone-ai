@@ -1,11 +1,21 @@
-import { Request, Response } from "express";
-import { CurriculumService } from "../services/CurriculumService";
+import { Request, Response, NextFunction } from "express";
+import {
+  CurriculumServiceClient,
+} from "../clients/CurriculumServiceClient";
 
-const curriculumService = new CurriculumService();
+const curriculumServiceClient =
+  new CurriculumServiceClient();
 
-export const getCurriculum = (
+export const getCurriculum = async (
   _req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
-  return res.json(curriculumService.getCurriculum());
+  try {
+    return res.json(
+      await curriculumServiceClient.getCurriculum()
+    );
+  } catch (error) {
+    next(error);
+  }
 };

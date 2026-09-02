@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 
@@ -30,7 +31,7 @@ app.use("/api/ai", aiRoutes);
 
 app.use(errorHandler);
 
-const PORT = 4000;
+const PORT = Number(process.env.PORT) || 4000;
 
 app.listen(PORT, () => {
   console.log(

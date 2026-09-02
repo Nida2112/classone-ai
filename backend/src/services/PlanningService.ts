@@ -1,14 +1,14 @@
-import { LearningRepository } from "../repositories/LearningRepository";
+import { LearningServiceClient } from "../clients/LearningServiceClient";
 
 export class PlanningService {
   constructor(
-    private readonly learningRepository =
-      new LearningRepository()
+    private readonly learningServiceClient =
+      new LearningServiceClient()
   ) {}
 
-  getTodayPlan(studentId: string) {
+  async getTodayPlan(studentId: string) {
     const progress =
-      this.learningRepository.findByStudentId(
+      await this.learningServiceClient.getStudentProgress(
         studentId
       );
 
